@@ -37,4 +37,5 @@ def execute_sql_query(query):
     conn = sqlite3.connect(DATABASE_PATH)
     df = pd.read_sql_query(query, conn)
     conn.close()
+    df = df.where(pd.notnull(df), None)
     return df.to_dict(orient="records")
