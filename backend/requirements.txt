@@ -5,3 +5,5 @@ python-dotenv
 python-multipart
 matplotlib
 groq
+openpyxl
+xlrd==1.2.0
