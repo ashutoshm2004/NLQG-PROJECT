@@ -29,7 +29,7 @@ export const downloadResult = async (sqlQuery, fileType) => {
   formData.append("query", sqlQuery);
   formData.append("file_type", fileType);
 
-  const response = await fetch("http://127.0.0.1:8000/download", {
+  const response = await fetch(`${BASE}/download`, {
     method: "POST",
     body: formData,
   });
