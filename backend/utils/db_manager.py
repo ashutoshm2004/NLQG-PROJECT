@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 import os
+import numpy as np
 
 # Base directory of utils folder
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -37,5 +38,8 @@ def execute_sql_query(query):
     conn = sqlite3.connect(DATABASE_PATH)
     df = pd.read_sql_query(query, conn)
     conn.close()
-    df = df.where(pd.notnull(df), None)
+    df = df.replace([np.nan, np.inf, -np.inf], None)
+    for col in df.columns:
+        if pd.api.types.is_datetime64_any_dtype(df[col]):
+            df[col] = df[col].astype("object").where(df[col].notna(), None)
     return df.to_dict(orient="records")
